@@ -190,7 +190,7 @@
     '此支付渠道不可用':'This payment method is unavailable.', '此支付渠道不支持所选币种':'This payment method does not support this currency.',
     '回跳地址不在允许的域名内':'The return page is not allowed. Please contact support.',
     '支付请求未能完成，请先查询订单状态':'Payment could not be started. Please check your order first.',
-    '单个测试完整报告':'One complete report', '三个测试合集':'Three-test collection', '全部测试通票':'All tests pass', '双人适配报告':'Couple report'
+    '单个测试完整报告':'One complete report', '三个测试合集':'Three-test collection', '全部测试通票':'All tests pass', '双人适配报告':'Couple report', '趣味性格测评完整报告':'Personality Quiz Full Report', '趣味性格测评·全部解锁':'Personality Quiz All-Access', '趣味性格测评完整报告·双人版':'Personality Quiz Full Report · Couples'
   }};
   Object.keys(messages.en).forEach(function (key) { messages.zh[key] = key; });
   function localized(value) {
@@ -283,7 +283,7 @@
     var pair = resultId.includes('+');
     return tokens.filter(function (token) {
       var p = typeof token === 'string' && tokenPayload(token);
-      return p && p.did === getDevice() && p.exp*1000 > Date.now() && (pair ? p.scope === 'couple:'+testId : p.scope === 'all' || p.scope === 'test:'+testId);
+      return p && p.did === getDevice() && p.exp*1000 > Date.now() && (p.scope === 'all' || (pair ? p.scope === 'couple:'+testId : p.scope === 'test:'+testId));
     }).reverse();
   }
   async function api(path, body) {
@@ -306,7 +306,7 @@
     if (!raw || !/^[a-z0-9_-]{1,80}$/.test(raw.testId || '') || !/^[a-z0-9_-]{1,80}(?:\+[a-z0-9_-]{1,80})?$/.test(raw.resultId || '')) throw new Error('请提供有效的 testId 和 resultId');
     if (requireRender && typeof raw.render !== 'function') throw new Error('lock 需要 render(content, el) 回调');
     var sku = raw.sku || 'single';
-    if (!['single','all','couple'].includes(sku) || (sku === 'couple') !== raw.resultId.includes('+')) throw new Error('商品与结果类型不匹配');
+    if (!['single','all','couple'].includes(sku) || (sku !== 'all' && (sku === 'couple') !== raw.resultId.includes('+'))) throw new Error('商品与结果类型不匹配');
     // 只读取新版参数；结果对象、preview 和未知属性均不进入锁卡。
     return { testId: raw.testId, resultId: raw.resultId, sku: sku, title: raw.title || '你的专属报告已生成', teaser: raw.teaser || '', bullets: raw.bullets || defaultBullets, answers: raw.answers, render: raw.render, fallback: raw.fallback };
   }
@@ -566,8 +566,8 @@
     });
     current.body.appendChild(currencies);
     var choices = element('div','sp-choices');
-    (opts.sku === 'couple' ? ['couple'] : ['single','all']).forEach(function (sku) {
-      var choice = button(config.skus[sku].title,'sp-choice',function () { opts.sku = sku; purchaseView(current); });
+    (opts.sku === 'couple' || (opts.sku === 'all' && opts.resultId.includes('+')) ? ['couple','all'] : ['single','all']).forEach(function (sku) {
+      var choice = button(function () { return localized(config.skus[sku].title) + ' · ' + money(config.skus[sku].price); },'sp-choice',function () { opts.sku = sku; purchaseView(current); });
       choice.setAttribute('aria-pressed',String(opts.sku === sku)); choices.appendChild(choice);
     });
     current.body.appendChild(choices);

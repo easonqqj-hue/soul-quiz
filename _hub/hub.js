@@ -126,11 +126,11 @@
     return '<svg class="card-art" viewBox="0 0 320 220" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">'+s+'</svg>';
   }
   var sections=[
-    ['city','城市','总有一座城，和你说同一种心事。'],
-    ['gufeng','历史古风','借一卷旧时光，照见此刻的自己。'],
-    ['love','恋爱情感','心动有很多种，你是哪一种？'],
     ['persona','人格天赋','那些习以为常的，也许正是你的光。'],
+    ['city','城市','总有一座城，和你说同一种心事。'],
+    ['love','恋爱情感','心动有很多种，你是哪一种？'],
     ['fun','情绪娱乐','给日常换个频道，认真玩一会儿。'],
+    ['gufeng','历史古风','借一卷旧时光，照见此刻的自己。'],
     ['niche','小众圈层','不必和所有人一样，找到同类就好。']
   ];
   function card(item,section){
@@ -145,7 +145,7 @@
       detail=known?known.results+' outcomes':(english.themes[item.id]?results+' outcomes':'10–16 outcomes');
       artwork=english.art(t[4],section+'-'+item.id)||english.localize(artwork);
     }
-    return '<a class="quiz-card" data-quiz-id="'+esc(item.id)+'" href="'+esc(item.dir)+'/index.html'+(en?'?lang=en':'')+'" style="--tile-bg:'+t[0]+';--tile-ink:'+t[1]+'"><div class="art-frame">'+artwork+(item.couple?'<span class="couple-badge">'+(en?'For two':'双人')+'</span>':'')+'</div><div class="card-copy"><h3>'+esc(en?item.shortEn:item.short)+'</h3><p>'+esc(en?item.titleEn:item.title)+'</p><div class="card-meta"><span>'+count+(en?' questions':' 题')+'</span><span>'+detail+'</span></div></div></a>';
+    return '<a class="quiz-card" data-quiz-id="'+esc(item.id)+'" href="'+esc(item.dir)+'/index.html'+(en?'?lang=en':'')+'" style="--tile-bg:'+t[0]+';--tile-ink:'+t[1]+'"><div class="art-frame">'+artwork+(item.couple?'<span class="couple-badge">'+(en?'For two':'双人')+'</span>':'')+'</div><div class="card-copy"><h3>'+esc(en?item.shortEn:item.short)+'</h3><p>'+esc(en?item.titleEn:item.title)+'</p><div class="card-meta"><span>'+count+(en?' questions':' 题')+'</span></div></div></a>';
   }
   document.getElementById('test-count').textContent=catalog.length;
   document.getElementById('collections').innerHTML=sections.map(function(section){
