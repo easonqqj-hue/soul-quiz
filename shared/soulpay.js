@@ -142,7 +142,7 @@
 
   var script = document.currentScript;
   var settings = { api: new URL((script && script.dataset.api) || '/api', script && script.src || location.href).href.replace(/\/$/,''), brand: {zh:'灵魂测试馆',en:'SoulPay'}, debug: false, lang: 'zh', region: null };
-  var config, configPromise, device, modal, polling, resumeOrder, oauthResume, creatingOrder = false, upgradeQuotes = {};
+  var config, configPromise, device, modal, polling, resumeOrder, oauthResume, creatingOrder = false;
   var locks = new Map(), events = new Map(), renders = new WeakMap();
   var vars = ['bg','fg','muted','accent','accent-fg','card','line','radius','font','blur'];
   var defaultBullets = ['你的专属结果与金句','性格解析与维度图谱','隐藏优势与趣味彩蛋','关系图鉴与完整分享图'];
@@ -190,7 +190,7 @@
     '此支付渠道不可用':'This payment method is unavailable.', '此支付渠道不支持所选币种':'This payment method does not support this currency.',
     '回跳地址不在允许的域名内':'The return page is not allowed. Please contact support.',
     '支付请求未能完成，请先查询订单状态':'Payment could not be started. Please check your order first.',
-    '单个测试完整报告':'One complete report', '三个测试合集':'Three-test collection', '全部测试通票':'All tests pass', '双人适配报告':'Couple report', '趣味性格测评完整报告':'Personality Quiz Full Report', '趣味性格测评·全部解锁':'Personality Quiz All-Access', '趣味性格测评完整报告·双人版':'Personality Quiz Full Report · Couples', '免费领取全部解锁':'Claim All-Access free', '已购报告已抵扣':'Credit from your reports', '原价':'List price', '此设备已拥有全部解锁':'This device already has All-Access.', '此设备没有可抵扣的已付订单':'No earlier purchase on this device to credit.'
+    '单个测试完整报告':'One complete report', '三个测试合集':'Three-test collection', '全部测试通票':'All tests pass', '双人适配报告':'Couple report', '趣味性格测评完整报告':'Personality Quiz Full Report', '趣味性格测评完整报告·双人版':'Personality Quiz Full Report · Couples'
   }};
   Object.keys(messages.en).forEach(function (key) { messages.zh[key] = key; });
   function localized(value) {
@@ -283,7 +283,7 @@
     var pair = resultId.includes('+');
     return tokens.filter(function (token) {
       var p = typeof token === 'string' && tokenPayload(token);
-      return p && p.did === getDevice() && p.exp*1000 > Date.now() && (p.scope === 'all' || (pair ? p.scope === 'couple:'+testId : p.scope === 'test:'+testId));
+      return p && p.did === getDevice() && p.exp*1000 > Date.now() && (pair ? p.scope === 'couple:'+testId : p.scope === 'test:'+testId);
     }).reverse();
   }
   async function api(path, body) {
@@ -301,29 +301,12 @@
   function element(tag, cls, text) { var el = document.createElement(tag); if (cls) el.className = cls; if (text !== undefined && text !== '') textBinding(el,text); return el; }
   function button(text, cls, handler) { var el = element('button', cls, text); el.type = 'button'; el.addEventListener('click', handler); return el; }
   function money(price, currency) { return ((currency || config && config.currency || (region() === 'cn' ? 'CNY' : 'USD')) === 'USD' ? '$' : '¥') + (price / 100).toFixed(2); }
-  function shortMoney(price, currency) { var text = money(price, currency); return text.charAt(0) === '¥' ? text.replace(/\.?0+$/,'') : text; }
-  async function loadQuote(force) {
-    if (!config) return null;
-    var currency = config.currency;
-    if (!force && upgradeQuotes[currency] !== undefined) return upgradeQuotes[currency];
-    try { upgradeQuotes[currency] = await api('/upgrade?deviceId='+encodeURIComponent(getDevice())+'&currency='+currency); }
-    catch (error) { upgradeQuotes[currency] = null; reportError(error); }
-    return upgradeQuotes[currency];
-  }
-  function activeQuote() { var q = config && upgradeQuotes[config.currency]; return q && q.eligible ? q : null; }
-  // 补差价文案：中文「解锁全部 33 个测试 ¥9.9 · 只需再付 ¥7.91」，英文 "Unlock all 33 · $9.99 · only $7.00 more"。
-  function upgradeLines(q, n) {
-    var en = settings.lang === 'en';
-    var head = en ? 'Unlock all '+n+' · '+shortMoney(q.price) : '解锁全部 '+n+' 个测试 '+shortMoney(q.price);
-    var tail = q.free ? (en ? 'free with what you have paid' : '已付满额 · 免费升级') : (en ? 'only '+shortMoney(q.amount)+' more' : '只需再付 '+shortMoney(q.amount));
-    return [head, tail];
-  }
   function reportError(error) { emit('error', error); if (settings.debug) console.warn('SoulPay', error.code || 'REQUEST_FAILED'); }
   function options(raw, requireRender) {
     if (!raw || !/^[a-z0-9_-]{1,80}$/.test(raw.testId || '') || !/^[a-z0-9_-]{1,80}(?:\+[a-z0-9_-]{1,80})?$/.test(raw.resultId || '')) throw new Error('请提供有效的 testId 和 resultId');
     if (requireRender && typeof raw.render !== 'function') throw new Error('lock 需要 render(content, el) 回调');
     var sku = raw.sku || 'single';
-    if (!['single','all','couple'].includes(sku) || (sku !== 'all' && (sku === 'couple') !== raw.resultId.includes('+'))) throw new Error('商品与结果类型不匹配');
+    if (!['single','couple'].includes(sku) || (sku === 'couple') !== raw.resultId.includes('+')) throw new Error('商品与结果类型不匹配');
     // 只读取新版参数；结果对象、preview 和未知属性均不进入锁卡。
     return { testId: raw.testId, resultId: raw.resultId, sku: sku, title: raw.title || '你的专属报告已生成', teaser: raw.teaser || '', bullets: raw.bullets || defaultBullets, answers: raw.answers, render: raw.render, fallback: raw.fallback };
   }
@@ -341,7 +324,7 @@
 .sp-card *,.sp-overlay *{box-sizing:border-box}.sp-card button,.sp-overlay button,.sp-overlay input{font:inherit}.sp-card button,.sp-overlay button{cursor:pointer}.sp-card button:disabled,.sp-overlay button:disabled{cursor:wait;opacity:.55}.sp-card button:focus-visible,.sp-overlay :focus-visible{outline:3px solid var(--sp-accent,#a1352c);outline-offset:4px}
 .sp-card{background:var(--sp-card,var(--sp-bg,#fffaf3));border:1px solid var(--sp-line,#ded5ca);border-radius:var(--sp-radius,18px);padding:36px 30px;max-width:560px;margin:auto;text-align:center;box-shadow:0 12px 36px #00000008}.sp-seal{position:relative;width:70px;height:82px;border:1px solid var(--sp-line,#ded5ca);margin:0 auto 24px;display:grid;place-items:center;border-radius:3px;background:repeating-linear-gradient(0deg,transparent,transparent 12px,var(--sp-line,#ded5ca) 13px,transparent 14px)}.sp-seal:after{content:'封';display:grid;place-items:center;border:1px solid currentColor;border-radius:50%;width:36px;height:36px;color:var(--sp-accent,#a1352c);background:var(--sp-card,var(--sp-bg,#fffaf3));font-family:serif;transform:rotate(-9deg)}
 .sp-title{font-size:23px;font-weight:600;letter-spacing:.03em;line-height:1.45;margin:0 0 12px}.sp-teaser,.sp-muted{color:var(--sp-muted,#746b62);margin:8px 0 20px}.sp-list{list-style:none;margin:24px auto;padding:0;max-width:310px;text-align:left;display:grid;gap:10px}.sp-list li{padding-left:21px;position:relative}.sp-list li:before{content:'＋';position:absolute;left:0;color:var(--sp-accent,#a1352c)}.sp-main{display:block;width:100%;border:1px solid transparent;border-radius:10px;padding:14px 18px;color:var(--sp-accent-fg,#fff);background:var(--sp-accent,#a1352c);font-weight:600;transition:transform .18s,opacity .18s}.sp-main:active{transform:scale(.985)}.sp-link{border:0;background:none;color:var(--sp-fg,#302b27);text-decoration:underline;text-underline-offset:4px;padding:10px 8px}.sp-terms{color:var(--sp-muted,#746b62);font-size:12px;margin:16px 0 0;line-height:1.7}.sp-error{color:var(--sp-fg,#302b27);border-left:3px solid var(--sp-accent,#a1352c);padding:10px 14px;background:var(--sp-card,#fffaf3);text-align:left}
-.sp-overlay{position:fixed;inset:0;z-index:2147483000;background:#0009;display:flex;align-items:center;justify-content:center;padding:24px;isolation:isolate}.sp-dialog{position:relative;max-width:460px;width:100%;max-height:90vh;max-height:90dvh;overflow:auto;overscroll-behavior:contain;background:var(--sp-bg,#fffaf3);border:1px solid var(--sp-line,#ded5ca);border-radius:var(--sp-radius,18px);padding:30px;box-shadow:0 24px 90px #0004;animation:sp-enter .22s ease-out}.sp-close{position:absolute;top:10px;right:12px;background:none;border:0;font-size:25px!important;width:42px;height:42px;color:inherit}.sp-brand{font-size:12px;color:var(--sp-muted,#746b62);margin:0 40px 24px 0}.sp-price{font-size:40px;font-weight:500;line-height:1.25;color:var(--sp-accent,#a1352c);margin:20px 0}.sp-choices{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}.sp-choice.sp-choice-upgrade{flex:1 1 100%;display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 10px}.sp-up-head{font-size:14px}.sp-up-tail{font-weight:600;color:var(--sp-accent,#a1352c);font-size:15px}.sp-upgrade-note{margin:-12px 0 6px;font-size:12.5px;color:var(--sp-muted,#746b62)}.sp-choice{flex:1;border:1px solid var(--sp-line,#ded5ca);border-radius:9px;padding:10px 8px;background:var(--sp-card,#fffaf3);color:inherit}.sp-choice[aria-pressed=true]{border-color:var(--sp-accent,#a1352c);box-shadow:inset 0 0 0 1px var(--sp-accent,#a1352c)}.sp-methods{display:grid;gap:12px}.sp-method{width:100%;text-align:left;border:1px solid var(--sp-line,#ded5ca);border-radius:10px;background:var(--sp-card,#fffaf3);color:inherit;padding:14px 16px;display:flex;align-items:center;gap:12px}.sp-icon{display:inline-grid;place-items:center;width:27px;height:27px;border-radius:8px;background:#06793d;color:white;font-weight:bold}.sp-icon-alipay{background:#0875b9}.sp-input{width:100%;border:1px solid var(--sp-line,#ded5ca);border-radius:8px;background:var(--sp-card,#fffaf3);color:inherit;padding:12px;margin:8px 0 14px}.sp-status{margin:18px 0 8px;overflow-wrap:anywhere}.sp-qr{width:232px;max-width:100%;margin:20px auto;padding:0;background:#fff}.sp-qr svg{display:block;width:100%;height:auto}.sp-success{width:60px;height:60px;border:1px solid var(--sp-accent,#a1352c);border-radius:50%;margin:24px auto;display:grid;place-items:center;color:var(--sp-accent,#a1352c);animation:sp-check .3s ease-out}.sp-success:after{content:'✓';font-size:32px}.sp-receipt{font-size:12px;color:var(--sp-muted,#746b62);overflow-wrap:anywhere}.sp-loading{color:var(--sp-muted,#746b62);text-align:center;padding:24px}
+.sp-overlay{position:fixed;inset:0;z-index:2147483000;background:#0009;display:flex;align-items:center;justify-content:center;padding:24px;isolation:isolate}.sp-dialog{position:relative;max-width:460px;width:100%;max-height:90vh;max-height:90dvh;overflow:auto;overscroll-behavior:contain;background:var(--sp-bg,#fffaf3);border:1px solid var(--sp-line,#ded5ca);border-radius:var(--sp-radius,18px);padding:30px;box-shadow:0 24px 90px #0004;animation:sp-enter .22s ease-out}.sp-close{position:absolute;top:10px;right:12px;background:none;border:0;font-size:25px!important;width:42px;height:42px;color:inherit}.sp-brand{font-size:12px;color:var(--sp-muted,#746b62);margin:0 40px 24px 0}.sp-price{font-size:40px;font-weight:500;line-height:1.25;color:var(--sp-accent,#a1352c);margin:20px 0}.sp-choices{display:flex;gap:10px;margin:18px 0}.sp-choice{flex:1;border:1px solid var(--sp-line,#ded5ca);border-radius:9px;padding:10px 8px;background:var(--sp-card,#fffaf3);color:inherit}.sp-choice[aria-pressed=true]{border-color:var(--sp-accent,#a1352c);box-shadow:inset 0 0 0 1px var(--sp-accent,#a1352c)}.sp-methods{display:grid;gap:12px}.sp-method{width:100%;text-align:left;border:1px solid var(--sp-line,#ded5ca);border-radius:10px;background:var(--sp-card,#fffaf3);color:inherit;padding:14px 16px;display:flex;align-items:center;gap:12px}.sp-icon{display:inline-grid;place-items:center;width:27px;height:27px;border-radius:8px;background:#06793d;color:white;font-weight:bold}.sp-icon-alipay{background:#0875b9}.sp-input{width:100%;border:1px solid var(--sp-line,#ded5ca);border-radius:8px;background:var(--sp-card,#fffaf3);color:inherit;padding:12px;margin:8px 0 14px}.sp-status{margin:18px 0 8px;overflow-wrap:anywhere}.sp-qr{width:232px;max-width:100%;margin:20px auto;padding:0;background:#fff}.sp-qr svg{display:block;width:100%;height:auto}.sp-success{width:60px;height:60px;border:1px solid var(--sp-accent,#a1352c);border-radius:50%;margin:24px auto;display:grid;place-items:center;color:var(--sp-accent,#a1352c);animation:sp-check .3s ease-out}.sp-success:after{content:'✓';font-size:32px}.sp-receipt{font-size:12px;color:var(--sp-muted,#746b62);overflow-wrap:anywhere}.sp-loading{color:var(--sp-muted,#746b62);text-align:center;padding:24px}
 @keyframes sp-enter{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}@keyframes sp-check{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
 @media(max-width:600px){.sp-overlay{padding:0;align-items:flex-end}.sp-dialog{border-radius:var(--sp-radius,18px) var(--sp-radius,18px) 0 0;max-height:94vh;max-height:94dvh;padding:28px 24px calc(24px + env(safe-area-inset-bottom,0px))}.sp-card{padding:28px 20px}.sp-title{font-size:21px}}@media(prefers-reduced-motion:reduce){.sp-card *,.sp-overlay *{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 `;
@@ -509,7 +492,7 @@
       if (locks.get(el) !== context) return 'locked';
       showLock(context);
       if (oauthResume && oauthResume.testId === context.opts.testId && oauthResume.resultId === context.opts.resultId && Date.now()-oauthResume.at < 600000) {
-        if (['single','all','couple'].includes(oauthResume.sku)) context.opts.sku = oauthResume.sku;
+        if (['single','couple'].includes(oauthResume.sku)) context.opts.sku = oauthResume.sku;
         oauthResume = null; write('soulpay_oauth:'+settings.api,null); await openContext(context);
       }
       return 'locked';
@@ -566,14 +549,7 @@
     if (modal !== current) return;
     current.view = 'purchase'; current.busy = false; current.body.replaceChildren();
     var opts = current.context.opts;
-    var quote = activeQuote(), allCount = opts.allCount || 33;
-    var upgrading = Boolean(quote && opts.sku === 'all');
-    var price = element('p','sp-price',upgrading ? money(quote.amount) : money(config.skus[opts.sku].price)); current.body.appendChild(price);
-    if (upgrading) {
-      var note = element('p','sp-upgrade-note'); note.removeAttribute('data-sp-text');
-      note.textContent = localized('已购报告已抵扣') + ' ' + money(quote.credit) + ' · ' + localized('原价') + ' ' + money(quote.price);
-      current.body.appendChild(note);
-    }
+    var price = element('p','sp-price',money(config.skus[opts.sku].price)); current.body.appendChild(price);
     var currencies = element('div','sp-currencies'); currencies.setAttribute('role','group');
     currencies.setAttribute('aria-label',localized('选择币种'));
     [['cn','人民币'],['intl','美元']].forEach(function (entry) {
@@ -582,33 +558,13 @@
         var previous = settings.region; current.busy = true;
         Array.from(current.body.querySelectorAll('button')).forEach(function (item) { item.disabled = true; });
         settings.region = entry[0];
-        try { await loadRegion(); await loadQuote(); emit('currency',{currency:config.currency,region:config.region}); }
+        try { await loadRegion(); emit('currency',{currency:config.currency,region:config.region}); }
         catch (error) { settings.region = previous; purchaseView(current); current.body.appendChild(element('p','sp-error',function () { return errorText(error); })); reportError(error); }
         finally { current.busy = false; }
       });
       choice.setAttribute('aria-pressed',String(config.region === entry[0])); currencies.appendChild(choice);
     });
     current.body.appendChild(currencies);
-    var choices = element('div','sp-choices');
-    (opts.sku === 'couple' || (opts.sku === 'all' && opts.resultId.includes('+')) ? ['couple','all'] : ['single','all']).forEach(function (sku) {
-      var choice = button(function () { return localized(config.skus[sku].title) + ' · ' + money(config.skus[sku].price); },'sp-choice',function () { opts.sku = sku; purchaseView(current); });
-      if (sku === 'all' && quote) {
-        var lines = upgradeLines(quote, allCount);
-        choice.className = 'sp-choice sp-choice-upgrade'; choice.removeAttribute('data-sp-text'); choice.replaceChildren();
-        choice.append(element('span','sp-up-head',lines[0]), element('span','sp-up-tail',lines[1]));
-      }
-      choice.setAttribute('aria-pressed',String(opts.sku === sku)); choices.appendChild(choice);
-    });
-    current.body.appendChild(choices);
-    if (upgrading && quote.free) {
-      current.body.appendChild(button('免费领取全部解锁','sp-main',function () {
-        if (current.busy || creatingOrder) return;
-        current.busy = true; creatingOrder = true;
-        claimUpgrade(current).catch(function (error) { current.busy = false; reportError(error); paymentFailure(modal || current,error); }).finally(function () { creatingOrder = false; });
-      }));
-      current.body.appendChild(button('我有兑换码','sp-link',function () { redeemView(current); }));
-      return;
-    }
     var methods = element('div','sp-methods');
     var names = {mock:'打开模拟收银台',wechat_jsapi:'微信支付',wechat_h5:'微信支付',wechat_native:'微信扫码支付',alipay_wap:'支付宝支付',alipay_page:'支付宝电脑网站支付',stripe_checkout:'卡支付 · Apple Pay · Google Pay',paypal:'PayPal'};
     var channels = availableChannels();
@@ -676,14 +632,6 @@
       document.addEventListener('WeixinJSBridgeReady',ready);
     });
   }
-  async function claimUpgrade(current) {
-    var opts = current.context.opts;
-    status(current,'正在创建订单…');
-    var result = await api('/orders',{testId:opts.testId,resultId:opts.resultId,lang:settings.lang,sku:'all',upgrade:true,deviceId:getDevice(),currency:config.currency});
-    saveTokens(result); upgradeQuotes = {};
-    emit('paid',result);
-    await paidView(modal || current);
-  }
   async function createOrder(current,channel,popup) {
     var opts = current.context.opts;
     var openid = read('soulpay_openid:'+settings.api,'');
@@ -693,7 +641,7 @@
     }
     status(current,'正在创建订单…');
     var result;
-    try { result = await api('/orders',{testId:opts.testId,resultId:opts.resultId,lang:settings.lang,sku:opts.sku,upgrade:opts.sku === 'all' && activeQuote() ? true : undefined,answers:opts.answers,deviceId:getDevice(),channel:channel,currency:config.currency,openid:openid || undefined,returnUrl:location.href}); }
+    try { result = await api('/orders',{testId:opts.testId,resultId:opts.resultId,lang:settings.lang,sku:opts.sku,answers:opts.answers,deviceId:getDevice(),channel:channel,currency:config.currency,openid:openid || undefined,returnUrl:location.href}); }
     catch (error) {
       if (error.orderId) { write(pendingKey(),{id:error.orderId,testId:opts.testId,resultId:opts.resultId,sku:opts.sku,at:Date.now()}); startPolling(error.orderId); }
       throw error;
@@ -801,7 +749,7 @@
       var saved = read(pendingKey(),null) || {};
       var pending = Object.assign({},saved,{id:result.orderId,testId:result.testId,resultId:result.resultId,sku:result.sku,amount:result.amount,currency:result.currency,pay:result.pay || saved.pay});
       if (result.status === 'paid') {
-        saveTokens(result); write(pendingKey(),null); polling = null; resumeOrder = null; upgradeQuotes = {};
+        saveTokens(result); write(pendingKey(),null); polling = null; resumeOrder = null;
         emit('paid',result);
         if (modal && modal.view === 'waiting') waitingView(modal,pending);
         if (modal) await paidView(modal); else await refreshLocks();
@@ -825,10 +773,7 @@
     if (code) { redeemView(current); return; }
     var pending = read(pendingKey(),null);
     if (pending && pending.id) { waitingView(current,pending); startPolling(pending.id); return; }
-    // 打开「全部解锁」时，只有已持有 all 凭证才视为已购；单测凭证不应挡住补差价升级。
-    var owned = candidates(context.opts.testId,context.opts.resultId);
-    if (context.opts.sku === 'all') owned = owned.filter(function (token) { return tokenPayload(token).scope === 'all'; });
-    if (owned.length) {
+    if (candidates(context.opts.testId,context.opts.resultId).length) {
       status(current,'正在核验购买凭证…');
       try { if (await contentFor(context.opts)) { await paidView(current,'此报告已解锁'); return; } }
       catch (error) {
@@ -838,7 +783,6 @@
         reportError(error); return;
       }
     }
-    await loadQuote(true);
     purchaseView(current);
   }
   document.addEventListener('visibilitychange',function () { if (!document.hidden) pollNow(); });
@@ -846,7 +790,6 @@
     init:init, setLang:setLang, lock:lock, relock:lock,
     open:async function (raw) { var context = {el:null,opts:options(raw,false)}; return openContext(context); },
     redeem:redeem,
-    upgradeQuote:async function () { await init(); if (!config) await loadRegion(); return loadQuote(true); },
     isUnlocked:async function (testId,resultId) { await init(); var opts = options({testId:testId,resultId:resultId,sku:typeof resultId === 'string' && resultId.includes('+') ? 'couple' : 'single'},false); return Boolean(await contentFor(opts)); },
     on:function (name,fn) { if (!['open','close','order','paid','unlock','error','currency','lang'].includes(name) || typeof fn !== 'function') throw new Error(localized('事件名称或回调错误')); if (!events.has(name)) events.set(name,[]); events.get(name).push(fn); return function () { events.set(name,events.get(name).filter(function (item) { return item !== fn; })); }; }
   };
