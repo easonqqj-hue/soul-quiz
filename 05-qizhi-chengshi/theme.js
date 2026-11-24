@@ -1,0 +1,25 @@
+(function(){
+ 'use strict';
+ var paper='#EFECE7',ink='#2A2A2A',gold='#B79A6A';
+ function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+ var bottle='<svg viewBox="0 0 180 240" fill="none" aria-hidden="true"><rect x="61" y="10" width="58" height="34" rx="2" fill="'+ink+'"/><path d="M68 44H112V62C112 70 146 70 146 95V213C146 225 139 230 128 230H52C41 230 34 225 34 213V95C34 70 68 70 68 62Z" fill="#FFFFFF33" stroke="'+gold+'" stroke-width="1.5"/><path d="M44 121V210C44 216 47 219 53 219H127C133 219 136 216 136 210V121" fill="#B79A6A15" stroke="#B79A6A55"/><path d="M46 96V112M46 184V207M53 82H75" stroke="white" stroke-width="3"/><rect x="48" y="112" width="84" height="72" fill="'+paper+'" stroke="#B79A6A88"/><text x="90" y="139" fill="'+ink+'" font-family="Georgia,serif" font-size="12" text-anchor="middle">Eau de ville</text><path d="M76 149H104" stroke="'+gold+'"/><text x="90" y="168" fill="'+ink+'" font-family="SimSun,serif" font-size="11" text-anchor="middle">待命名</text></svg>';
+ window.THEME={
+ colors:{bg:paper,fg:ink,accent:gold,muted:'#6B655E'},letters:['Ⅰ','Ⅱ','Ⅲ','Ⅳ'],qNo:function(i){return '试香纸 '+String(i+1).padStart(2,'0')+' / 30';},
+ decor:'<div class="perfume-shadow"></div><div class="lab-rule"></div>',
+ homeTop:'<div class="lab-still-life"><span class="eau-word">Eau<br><i>de ville.</i></span><div class="sample-bottle">'+bottle+'</div><span class="scent-strip strip-one"></span><span class="scent-strip strip-two"></span></div>',
+ homeBottom:'<div class="note-key"><span>前调 / 印象</span><span>中调 / 相处</span><span>后调 / 余韵</span></div>',ornament:'<span class="gold-thread"></span>',loader:'<div class="scent-loading">'+bottle+'</div>',
+ gateArt:'<div class="pw-art sealed-scent">'+bottle+'<span class="sealed-label">城市名待揭晓</span><span class="label-string"></span><span class="hang-tag">只属于你<br><i>尚未启封</i></span></div>',
+ onBuild:function(){document.getElementById('chips').replaceChildren();},
+ heroHTML:function(r,pct,L){return '<div class="r-hero"><div class="scent-no">N° '+esc(r.no)+'</div><div class="r-kicker">'+esc(L.resultKicker)+'</div><h1 class="r-name">'+esc(r.name)+'</h1><div class="city-latin">'+esc(r.en)+'</div><div class="r-sub">'+esc(r.sub)+'</div><div class="r-tag">'+esc(r.tag)+'</div><div class="r-quote">'+esc(r.quote)+'</div><div class="scent-pyramid">'+r.notes.map(function(n,i){return '<div class="note-layer"><small>'+['前调','中调','后调'][i]+'</small><div><b>'+esc(n[0])+'</b><p>'+esc(n[1])+' · '+esc(n[2])+'</p></div></div>';}).join('')+'</div><div class="r-traits">'+r.traits.map(function(t){return '<span>'+esc(t)+'</span>';}).join('')+'</div><div class="r-pct">'+esc(L.pct)+'<b>'+pct+'%</b></div></div>';},
+ drawCard:function(ctx,d,h){
+   ctx.fillStyle=paper;ctx.fillRect(0,0,1080,1440);ctx.textAlign='center';ctx.fillStyle=ink;ctx.font=h.font(27,h.sans);ctx.fillText(d.quiz.title,540,65);
+   ctx.fillStyle='#DFD8CC';ctx.beginPath();ctx.ellipse(560,1216,340,32,-.05,0,Math.PI*2);ctx.fill();ctx.fillStyle=ink;ctx.fillRect(407,98,266,100);ctx.strokeStyle=gold;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(430,198);ctx.lineTo(430,230);ctx.bezierCurveTo(430,260,198,240,198,360);ctx.lineTo(198,1145);ctx.quadraticCurveTo(198,1216,265,1216);ctx.lineTo(815,1216);ctx.quadraticCurveTo(882,1216,882,1145);ctx.lineTo(882,360);ctx.bezierCurveTo(882,240,650,260,650,230);ctx.lineTo(650,198);ctx.closePath();ctx.fillStyle='#F7F5F066';ctx.fill();ctx.stroke();
+   ctx.strokeStyle='#FFFFFFCC';ctx.lineWidth=7;ctx.beginPath();ctx.moveTo(225,370);ctx.lineTo(225,1090);ctx.stroke();ctx.lineWidth=1;ctx.strokeStyle='#C9A9A655';ctx.strokeRect(242,320,596,834);ctx.fillStyle=paper;ctx.fillRect(248,326,584,822);
+   ctx.fillStyle='#756143';ctx.font=h.font(32,'Didot,Georgia,serif');ctx.fillText('N° '+d.r.no,540,284);ctx.fillStyle=ink;h.fit(ctx,d.r.name,540,122,h.serif);ctx.fillText(d.r.name,540,450);h.fit(ctx,d.r.en,500,40,'Didot,Georgia,serif');ctx.fillText(d.r.en,540,512);ctx.font=h.font(27,h.sans);h.wrap(ctx,d.r.tag,540,573,540,43,2);
+   ctx.strokeStyle=gold;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(460,609);ctx.lineTo(620,609);ctx.stroke();ctx.font=h.font(35,h.serif);h.wrap(ctx,d.r.quote,540,663,490,52,2);
+   ctx.font=h.font(23);ctx.fillStyle='#6B655E';ctx.fillText(d.r.traits.join('  /  '),540,776);
+   d.r.notes.forEach(function(n,i){var y=838+i*102;ctx.textAlign='left';ctx.font=h.font(22);ctx.fillStyle='#756143';ctx.fillText(['前调','中调','后调'][i],286,y);ctx.fillStyle=ink;ctx.font=h.font(29,h.serif);ctx.fillText(n[1],380,y);ctx.font=h.font(22);ctx.fillStyle='#625D57';ctx.fillText(n[2],380,y+36);});
+   ctx.textAlign='center';ctx.fillStyle=ink;ctx.font=h.font(24);ctx.fillText('气质相合度 '+d.pct+'%  /  城市香气的文学比喻',540,1186);ctx.font=h.font(28,'Didot,Georgia,serif');ctx.fillText('Eau de ville — your own atmosphere',540,1295);ctx.font=h.font(25);ctx.fillText(d.labels.cardFooter,540,1360);ctx.font=h.font(22);ctx.fillText('趣味测试 · 仅供娱乐',540,1400);h.noise(ctx,8500,'rgba(75,65,50,A)',37);
+ },pickDelay:310,loadingMs:2100
+ };
+})();

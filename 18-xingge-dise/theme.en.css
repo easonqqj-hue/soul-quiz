@@ -1,0 +1,24 @@
+html[data-lang=en]{--font-title:"Helvetica Neue",Arial,sans-serif;--font-body:"Helvetica Neue",Arial,sans-serif}
+html[data-lang=en] .h-title{font-size:37px;line-height:1.12;letter-spacing:-.05em;margin:18px 0}html[data-lang=en] .h-kicker{font-size:10px;letter-spacing:.07em}html[data-lang=en] .h-sub{font-size:14px;line-height:1.5}html[data-lang=en] .h-intro{font-size:15px;line-height:1.65}html[data-lang=en] .h-meta{font-size:11px}html[data-lang=en] .study-caption{font-size:11px;letter-spacing:0}html[data-lang=en] .lab-signoff span:last-child{font-size:12px}html[data-lang=en] .q-text{font-size:24px;line-height:1.35;min-height:0}html[data-lang=en] .q-stage{min-height:550px}html[data-lang=en] .q-no{font-size:12px}html[data-lang=en] .opt{min-height:76px;padding:16px 13px}html[data-lang=en] .opt .t{font-size:15px;line-height:1.55}html[data-lang=en] .q-tip{font-size:12px;line-height:1.5}html[data-lang=en] .r-name{font-size:52px;line-height:1.02;letter-spacing:-.055em;margin-top:55px;overflow-wrap:normal}html[data-lang=en] .r-sub{display:none}html[data-lang=en] .r-kicker{font-size:11px;letter-spacing:.02em}html[data-lang=en] .r-tag{font-size:17px;line-height:1.5}html[data-lang=en] .r-quote{font-size:18px;line-height:1.5}html[data-lang=en] .r-traits{gap:9px 14px}html[data-lang=en] .r-traits span{font-size:11px}html[data-lang=en] .r-sec p{font-size:16px;line-height:1.65}html[data-lang=en] .r-sec h2{font-size:20px;line-height:1.35}html[data-lang=en] .dim{grid-template-columns:91px 1fr 30px;font-size:12px}html[data-lang=en] .rel-card b{font-size:25px;line-height:1.1;margin:8px 0}html[data-lang=en] .rel-card i{display:block;font-size:12px;line-height:1.5}html[data-lang=en] .gallery{grid-template-columns:repeat(2,minmax(0,1fr))}html[data-lang=en] .g-item{padding:18px 10px}html[data-lang=en] .g-item b{font-size:19px;line-height:1.2}html[data-lang=en] .g-item i{font-size:11px;line-height:1.5}html[data-lang=en] .pw-kicker{font-size:11px;letter-spacing:.06em}html[data-lang=en] .pw-title{font-size:31px;line-height:1.1;letter-spacing:-.035em;margin:13px 0}html[data-lang=en] .pw-desc{font-size:15px;line-height:1.65}html[data-lang=en] .swatch-bottom{font-size:9px}html[data-lang=en] .swatch-cover small{font-size:11px;letter-spacing:.05em}html[data-lang=en] .pw-list li{font-size:12px;line-height:1.5}html[data-lang=en] .btn{white-space:normal;font-size:15px;letter-spacing:0;text-align:center}html[data-lang=en] .pw-unlock-btn span{text-align:left}html[data-lang=en] .more-item b{line-height:1.5}html[data-lang=en] .more-item i{white-space:nowrap}html[data-lang=en] .pop h4{font-size:31px;line-height:1.15}html[data-lang=en] .lang-switch{min-height:44px;top:9px;border-radius:0}html[data-lang=en] .lang-switch:focus-visible{outline:3px solid #245579;outline-offset:4px}
+@media(max-width:360px){html[data-lang=en] .h-title{font-size:33px}html[data-lang=en] .r-name{font-size:45px}html[data-lang=en] .q-stage{min-height:610px}html[data-lang=en] .q-text{font-size:22px}}
+/* B06EN: a clear typographic swatch, with American spelling throughout. */
+html[data-lang=en] body{font-size:16px;line-height:1.6}
+html[data-lang=en] .h-title{font-size:43px;line-height:1.1;font-weight:700}
+html[data-lang=en] .h-intro{line-height:1.6}
+html[data-lang=en] .q-stage{min-height:0;margin-bottom:26px}
+html[data-lang=en] .q-text{hyphens:none}
+html[data-lang=en] .r-name{font-size:52px;line-height:1.04;text-wrap:balance;overflow-wrap:break-word}
+html[data-lang=en] .r-sub{display:block;font-size:14px}
+html[data-lang=en] .r-tag{font-size:16px;line-height:1.6}
+html[data-lang=en] .colour-head{gap:12px;align-items:flex-start}
+html[data-lang=en] .colour-no{flex:none}
+html[data-lang=en] .r-kicker,html[data-lang=en] .pw-kicker{text-transform:uppercase}
+html[data-lang=en] .r-traits span{font-size:12px;white-space:normal}
+html[data-lang=en] .dim{grid-template-columns:94px minmax(0,1fr) 30px}
+html[data-lang=en] .rel{grid-template-columns:repeat(2,minmax(0,1fr))}
+html[data-lang=en] .pw-unlock-btn{min-height:58px;gap:12px}
+html[data-lang=en] .pw-price{flex:none}
+html[data-lang=en] .more-item b{min-width:0}
+html[data-lang=en] .pop p{font-size:16px;line-height:1.6}
+@media(max-width:360px){html[data-lang=en] .h-title{font-size:37px}html[data-lang=en] .r-name{font-size:44px}}
+@media(max-height:760px) and (min-width:361px){html[data-lang=en] .home{padding-top:65px;padding-bottom:25px}html[data-lang=en] .colour-study{height:144px;margin-bottom:20px}html[data-lang=en] .study-a{height:110px}html[data-lang=en] .study-b{height:88px}html[data-lang=en] .study-c{height:57px}html[data-lang=en] .lab-signoff{margin-top:20px}}

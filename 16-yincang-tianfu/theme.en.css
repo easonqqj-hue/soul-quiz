@@ -1,0 +1,24 @@
+html[data-lang=en]{--font-title:Didot,"Bodoni 72",Georgia,serif;--font-body:"Avenir Next","Helvetica Neue",Arial,sans-serif}
+html[data-lang=en] .h-title{font-size:38px;line-height:1.12;letter-spacing:-.03em;font-weight:500;margin:17px 0}html[data-lang=en] .h-kicker{font-size:10px;letter-spacing:.1em}html[data-lang=en] .h-sub{font-size:14px;letter-spacing:0}html[data-lang=en] .h-intro{font-size:15px;line-height:1.6}html[data-lang=en] .h-meta{font-size:11px}html[data-lang=en] .specimen-scale{writing-mode:horizontal-tb;letter-spacing:.06em;font-size:9px;text-align:right;right:0}html[data-lang=en] .specimen-note{font-size:9px;letter-spacing:.05em;max-width:79px}html[data-lang=en] .museum-caption{font-size:12px;letter-spacing:.03em}html[data-lang=en] .q-text{font-size:24px;line-height:1.35;font-weight:500;min-height:0}html[data-lang=en] .q-stage{min-height:540px}html[data-lang=en] .opt .t{font-size:15px;line-height:1.55}html[data-lang=en] .opt{padding:15px 13px;min-height:74px}html[data-lang=en] .q-tip{font-size:12px;line-height:1.5}html[data-lang=en] .r-name{font-size:37px;line-height:1.1;letter-spacing:-.035em}html[data-lang=en] .r-tag{font-family:var(--font-body);font-size:15px;line-height:1.55;letter-spacing:0}html[data-lang=en] .r-sub{letter-spacing:0;font-size:12px}html[data-lang=en] .r-kicker{letter-spacing:.04em;font-size:11px}html[data-lang=en] .r-quote{line-height:1.5;font-size:21px}html[data-lang=en] .r-traits{gap:8px 4px}html[data-lang=en] .r-sec p{font-size:16px;line-height:1.65}html[data-lang=en] .r-sec h2{letter-spacing:0;font-size:23px}html[data-lang=en] .dim{grid-template-columns:95px 1fr 30px;font-size:12px}html[data-lang=en] .rel-card b{font-size:22px;line-height:1.25}html[data-lang=en] .rel-card small{letter-spacing:0}html[data-lang=en] .rel-card i{display:block;line-height:1.5}html[data-lang=en] .g-item b{font-family:var(--font-title);font-size:19px;line-height:1.2}html[data-lang=en] .g-item i{font-size:11px;line-height:1.5}html[data-lang=en] .pw-kicker{letter-spacing:.12em}html[data-lang=en] .pw-title{font-size:32px;line-height:1.15;letter-spacing:-.02em;margin:14px 0}html[data-lang=en] .pw-desc{font-size:15px;line-height:1.65}html[data-lang=en] .pw-list li{font-size:12px;padding:5px 3px}html[data-lang=en] .btn{letter-spacing:.02em;font-size:15px;white-space:normal;text-align:center}html[data-lang=en] .pw-unlock-btn{font-size:14px;gap:10px}html[data-lang=en] .pw-unlock-btn span{text-align:left}html[data-lang=en] .pw-box-t{letter-spacing:0}html[data-lang=en] .more-item b{line-height:1.5}html[data-lang=en] .more-item i{white-space:nowrap}html[data-lang=en] .pop h4{font-size:30px;line-height:1.2}
+html[data-lang=en] .lang-switch{border-radius:0;min-height:44px;top:9px;font-size:12px}html[data-lang=en] .lang-switch:focus-visible{outline:2px solid #EFE8DA;outline-offset:4px}
+@media(max-width:360px){html[data-lang=en] .h-title{font-size:33px}html[data-lang=en] .r-name{font-size:32px}html[data-lang=en] .specimen-note{font-size:8px;max-width:65px}html[data-lang=en] .pw-title{font-size:28px}html[data-lang=en] .q-stage{min-height:580px}}
+/* B06EN: English specimen labels and readable mobile typesetting. */
+html[data-lang=en] body{font-size:16px;line-height:1.6}
+html[data-lang=en] .h-title{font-size:44px;line-height:1.12;font-weight:500;letter-spacing:-.025em}
+html[data-lang=en] .h-intro{max-width:340px}
+html[data-lang=en] .specimen-note,html[data-lang=en] .specimen-scale{font-family:var(--font-body);font-size:10px;line-height:1.65;letter-spacing:.06em}
+html[data-lang=en] .opt .k{transform:none;width:28px;height:28px;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);background:#B08D571A;border:0}
+html[data-lang=en] .opt.sel .k{background:#C4A873}
+html[data-lang=en] .q-stage{min-height:0;margin-bottom:26px}
+html[data-lang=en] .q-text{hyphens:none}
+html[data-lang=en] .r-name{font-size:38px;line-height:1.13;text-wrap:balance}
+html[data-lang=en] .dim{grid-template-columns:106px minmax(0,1fr) 30px}
+html[data-lang=en] .rel{grid-template-columns:repeat(2,minmax(0,1fr))}
+html[data-lang=en] .r-kicker,html[data-lang=en] .pw-kicker{text-transform:uppercase}
+html[data-lang=en] .pw-unlock-btn{min-height:58px}
+html[data-lang=en] .pw-price{flex:none}
+html[data-lang=en] .more-item{gap:12px}
+html[data-lang=en] .more-item b{min-width:0}
+html[data-lang=en] .pop p{font-size:16px;line-height:1.6}
+@media(max-width:360px){html[data-lang=en] .h-title{font-size:38px}html[data-lang=en] .r-name{font-size:33px}html[data-lang=en] .specimen-note,html[data-lang=en] .specimen-scale{font-size:9px}}
+@media(max-height:760px) and (min-width:361px){html[data-lang=en] .home{padding-top:65px;padding-bottom:25px}html[data-lang=en] .specimen-scene{height:160px;margin-bottom:7px}html[data-lang=en] .home-gem svg{height:150px}html[data-lang=en] .h-title{margin:12px 0}html[data-lang=en] .museum-caption{margin-top:16px}}

@@ -1,0 +1,30 @@
+/* English typography only; the Chinese edition remains byte-for-byte intact. */
+html[data-lang=en] body{font-size:15.5px;line-height:1.6}
+.h-sub,.h-intro,.r-sub,.r-tag,.r-quote,.r-sec h2,.btn,.pw-title,.pw-desc,.pw-box-t,.rel-card small{letter-spacing:0}
+.h-intro,.pw-desc,.r-sec p,.pop p{font-size:15.5px;line-height:1.6}
+.h-kicker,.r-kicker,.pw-kicker{font-family:var(--font-body);font-size:10px;letter-spacing:.16em!important}
+.h-sub{font-size:13px;line-height:1.5}.h-meta{font-size:11px;line-height:1.6;letter-spacing:0}
+.q-stage{min-height:0;margin-bottom:26px}.qcard{position:relative}.qcard.leave{position:absolute}
+.q-text{min-height:0;font-size:24px;line-height:1.3;letter-spacing:-.02em;hyphens:none!important;margin-bottom:24px}
+.opt{font-size:15.5px;line-height:1.6}.opt .t{min-width:0;overflow-wrap:normal;hyphens:none}
+.q-no{letter-spacing:.06em}.q-tip{font-size:12px;line-height:1.5}
+.r-name{font-family:var(--font-title);font-size:39px;line-height:1.08;letter-spacing:-.035em;font-weight:500;overflow-wrap:normal;hyphens:none}
+.r-tag{font-family:var(--font-body);font-size:15.5px;line-height:1.5}.r-sub{font-size:12px;line-height:1.5}
+.r-quote{font-size:21px;line-height:1.4}.r-sec h2{font-size:21px;line-height:1.25}
+.r-traits{gap:7px 9px}.r-traits span{font-size:12px;line-height:1.5}
+.dim{grid-template-columns:112px minmax(0,1fr) 29px;gap:8px}.dn{font-size:12px;line-height:1.3}
+.rel-card,.g-item{min-width:0;min-height:80px}.rel-card b{font-size:21px;line-height:1.2;font-weight:500}.rel-card small{font-size:11px;line-height:1.4}.rel-card i{font-size:12px;line-height:1.5}
+.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}.g-item b{font-size:15px;line-height:1.3}.g-item i{font-size:11px;line-height:1.5}
+.more-item{gap:14px}.more-item b{line-height:1.4}.more-item i{font-size:10px}
+.btn{letter-spacing:0!important;white-space:normal;line-height:1.35;padding-top:13px;padding-bottom:13px;min-height:52px;max-width:100%}
+.r-actions .btn,.pw-unlock-btn{font-size:15px}.pw-unlock-btn{gap:12px;padding-left:16px;padding-right:16px}.pw-price{flex:none}
+.pw-title{font-size:31px;line-height:1.15}.pw-kicker{line-height:1.5}.pw-list li{font-size:12px}.pw-note{line-height:1.6}
+.lang-switch{height:44px;top:10px;border-radius:5px;font-family:var(--font-body)}.topnav{top:10px;min-height:44px;font-size:12px}
+.back,.link{min-height:44px}.loading p{letter-spacing:0;max-width:300px;line-height:1.6}
+button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+@media(max-width:360px){.q-text{font-size:22px}.r-name{font-size:35px}.pw-title{font-size:28px}.opt{font-size:15px}.r-hero{padding-left:16px;padding-right:16px}.dim{grid-template-columns:98px minmax(0,1fr) 27px}.rel{gap:8px}.rel-card{padding:12px}.rel-card b{font-size:19px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+:root{--font-title:Futura,"Avenir Next","Helvetica Neue",Arial,sans-serif;--font-body:"Avenir Next","Helvetica Neue",Arial,sans-serif}
+.home{padding-top:74px;padding-bottom:28px}.home .h-title{font-size:47px;line-height:1.02;letter-spacing:-.055em;font-weight:600;margin:12px 0}.home-turntable{height:226px;margin-bottom:17px}.mini-sleeve b{font:500 34px/1.04 var(--font-title);letter-spacing:-.05em;margin-top:28px}.mini-sleeve span{font-size:9px;letter-spacing:.09em}.mini-sleeve i{font-size:12px}.h-intro{max-width:355px;margin-bottom:20px}.tempo-note{font-size:10px;line-height:1.5}.q-text{font-weight:500}.opt{padding-top:20px;padding-bottom:20px}.record-cover .r-name{font-size:40px;font-weight:600;letter-spacing:-.045em}.record-cover .r-tag{font-size:15.5px}.record-cover .r-quote{font:italic 21px/1.4 Georgia,serif}.cover-top{font-size:10px;letter-spacing:.06em}.cover-top i{letter-spacing:0}.track-heading{font-size:12px}.track{grid-template-columns:23px minmax(0,1fr) 36px;gap:7px}.track b{font-size:16px}.track p{font-size:13px;line-height:1.5}.track-time{font-size:10px}.track-heading i{font:10px var(--font-body)}.r-sec h2{font-size:20px}.r-pct{letter-spacing:0}.record-sleeve span{font-size:9px;letter-spacing:.05em}.record-sleeve b{font:500 30px/1.1 var(--font-title);width:155px;margin-top:37px;letter-spacing:-.04em}.record-sleeve i{font-size:9px;margin-top:22px;letter-spacing:.05em}.sleeve-lines{opacity:.25}.sleeve-seal{width:78px}.pw-art.sealed-record .record-label span{font-size:8px}
+@media(max-width:360px){.home .h-title{font-size:43px}.home-turntable{height:214px}.mini-sleeve b{font-size:31px}.record-cover .r-name{font-size:35px}.tracklist{margin-left:-16px;margin-right:-16px}.record-sleeve b{font-size:28px}.record-sleeve i{margin-top:15px}}

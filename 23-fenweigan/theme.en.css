@@ -1,0 +1,39 @@
+/* English typography only; the Chinese edition remains byte-for-byte intact. */
+html[data-lang=en] body{font-size:15.5px;line-height:1.6}
+.h-sub,.h-intro,.r-sub,.r-tag,.r-quote,.r-sec h2,.btn,.pw-title,.pw-desc,.pw-box-t,.rel-card small{letter-spacing:0}
+.h-intro,.pw-desc,.r-sec p,.pop p{font-size:15.5px;line-height:1.6}
+.h-kicker,.r-kicker,.pw-kicker{font-family:var(--font-body);font-size:10px;letter-spacing:.16em!important}
+.h-sub{font-size:13px;line-height:1.5}.h-meta{font-size:11px;line-height:1.6;letter-spacing:0}
+.q-stage{min-height:0;margin-bottom:26px}.qcard{position:relative}.qcard.leave{position:absolute}
+.q-text{min-height:0;font-size:24px;line-height:1.3;letter-spacing:-.02em;hyphens:none!important;margin-bottom:24px}
+.opt{font-size:15.5px;line-height:1.6}.opt .t{min-width:0;overflow-wrap:normal;hyphens:none}
+.q-no{letter-spacing:.06em}.q-tip{font-size:12px;line-height:1.5}
+.r-name{font-family:var(--font-title);font-size:39px;line-height:1.08;letter-spacing:-.035em;font-weight:500;overflow-wrap:normal;hyphens:none}
+.r-tag{font-family:var(--font-body);font-size:15.5px;line-height:1.5}.r-sub{font-size:12px;line-height:1.5}
+.r-quote{font-size:21px;line-height:1.4}.r-sec h2{font-size:21px;line-height:1.25}
+.r-traits{gap:7px 9px}.r-traits span{font-size:12px;line-height:1.5}
+.dim{grid-template-columns:112px minmax(0,1fr) 29px;gap:8px}.dn{font-size:12px;line-height:1.3}
+.rel-card,.g-item{min-width:0;min-height:80px}.rel-card b{font-size:21px;line-height:1.2;font-weight:500}.rel-card small{font-size:11px;line-height:1.4}.rel-card i{font-size:12px;line-height:1.5}
+.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}.g-item b{font-size:15px;line-height:1.3}.g-item i{font-size:11px;line-height:1.5}
+.more-item{gap:14px}.more-item b{line-height:1.4}.more-item i{font-size:10px}
+.btn{letter-spacing:0!important;white-space:normal;line-height:1.35;padding-top:13px;padding-bottom:13px;min-height:52px;max-width:100%}
+.r-actions .btn,.pw-unlock-btn{font-size:15px}.pw-unlock-btn{gap:12px;padding-left:16px;padding-right:16px}.pw-price{flex:none}
+.pw-title{font-size:31px;line-height:1.15}.pw-kicker{line-height:1.5}.pw-list li{font-size:12px}.pw-note{line-height:1.6}
+.lang-switch{height:44px;top:10px;border-radius:5px;font-family:var(--font-body)}.topnav{top:10px;min-height:44px;font-size:12px}
+.back,.link{min-height:44px}.loading p{letter-spacing:0;max-width:300px;line-height:1.6}
+button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+@media(max-width:360px){.q-text{font-size:22px}.r-name{font-size:35px}.pw-title{font-size:28px}.opt{font-size:15px}.r-hero{padding-left:16px;padding-right:16px}.dim{grid-template-columns:98px minmax(0,1fr) 27px}.rel{gap:8px}.rel-card{padding:12px}.rel-card b{font-size:19px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+:root{--font-title:Didot,"Bodoni 72",Georgia,serif;--font-body:"Gill Sans","Helvetica Neue",Arial,sans-serif}
+.home{padding-top:72px;padding-bottom:28px}.home .h-title{font-family:var(--font-title);font-size:42px;line-height:1.03;font-weight:400;letter-spacing:-.045em;margin:13px 0}.home-collage{height:210px;margin-bottom:18px}.h-intro{max-width:360px;margin-bottom:21px}.handwritten{font-size:19px}.album-footnote{font:italic 13px Georgia,serif}
+.polaroid{padding-bottom:38px}.polaroid figcaption{font:italic 11px Georgia,serif;line-height:1.2;white-space:normal;bottom:8px;left:7px;right:7px}.photo-1 figcaption,.photo-2 figcaption{font-size:10px}.q-opts{align-items:stretch;gap:18px 14px}.opt{height:auto;min-height:185px;padding:10px 12px 17px}.opt:before{height:37px;flex:none}.opt .k{top:13px}.opt .t{line-height:1.5}.r-name{font-size:43px}.r-name span{font-size:.72em}.r-quote{font-style:italic}.r-sub{font-size:12px}.result-collage{margin-top:18px;margin-bottom:17px}.album-sleeve span{font:25px Georgia,serif;letter-spacing:-.02em}.album-sleeve i{font-size:10px;letter-spacing:.04em}.developing-photo i{font:italic 12px Georgia,serif}.pw-title{font-weight:400}.r-sec h2{font-weight:400}
+@media(max-width:360px){.home .h-title{font-size:36px}.home-collage{height:190px}.q-opts{gap:16px 11px}.opt{min-height:195px;padding:9px 10px 15px}.polaroid figcaption{font-size:10px}.photo-1 figcaption,.photo-2 figcaption{font-size:9px}.r-name{font-size:36px}}
+/* Keep every caption readable: one main print and two small detail prints. */
+.home-collage{height:226px}.collage .photo-0{left:1%;top:10px;width:59%;height:217px;transform:rotate(-3deg)}
+.collage .photo-1,.collage .photo-2{left:67%;width:31%;height:105px;transform:rotate(4deg);padding:6px 6px 35px}
+.collage .photo-1{top:5px}.collage .photo-2{top:126px;transform:rotate(-4deg)}
+.collage .album-tape{left:20%;top:0;width:80px}.collage .photo-1 figcaption,.collage .photo-2 figcaption{font-size:10px;bottom:5px}
+.result-collage{height:270px}.result-collage .photo-0{height:253px}.result-collage .photo-1,.result-collage .photo-2{height:121px}.result-collage .photo-2{top:142px}
+.album-sleeve{padding-top:48px}.album-sleeve .seal-tape{top:18px;left:auto;right:18px;height:23px;width:50px;padding-top:4px;font-size:10px}
+@media(max-width:360px){.home-collage{height:211px}.home-collage .photo-0{height:202px}.home-collage .photo-1,.home-collage .photo-2{height:98px}.home-collage .photo-2{top:115px}.collage .photo-1 figcaption,.collage .photo-2 figcaption{font-size:9px}}

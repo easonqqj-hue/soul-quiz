@@ -1,0 +1,40 @@
+(function(){
+ 'use strict';
+ var serif='"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif',sans='"Gill Sans","Trebuchet MS",Arial,sans-serif';
+ var plates={
+  perfumer:['M83 21H117V43H110V64Q152 76 154 119V164Q100 185 46 164V119Q48 76 90 64V43H83Z','M84 30H116M90 54H110M52 111Q100 91 148 111M57 145Q100 126 143 145M72 105V155M82 103V158'],
+  glassblower:['M99 17L100 99M95 17H104M83 102Q59 115 65 146Q70 170 101 169Q136 167 138 142Q140 116 116 102Z','M80 112Q67 140 86 155M92 164H109M105 37L172 22M105 42L174 27'],
+  luthier:['M91 15H109V72Q139 60 145 84Q147 101 129 112Q159 127 142 157Q128 180 100 174Q72 180 58 157Q41 127 71 112Q53 101 55 84Q61 60 91 72Z','M95 19V152M100 19V152M105 19V152M77 143H123M90 157H110M87 30H113M88 43H112M86 99Q73 106 85 122M114 99Q127 106 115 122'],
+  cartographer:['M25 55L75 38 125 53 175 37V155L125 173 75 157 25 174Z','M75 38V157M125 53V173M36 137Q57 94 86 116T161 86M37 78L55 70M139 63L160 56','M94 15L55 144M106 15L147 144M88 34H112M100 8V45M60 126L66 128M134 128L140 126'],
+  clockmaker:['M100 21A74 74 0 1 1 99.9 21M100 35A60 60 0 1 0 100.1 35','M100 47V56M100 134V144M50 95H60M140 95H150M100 95L84 67M100 95L127 111','M70 112A20 20 0 1 1 69.9 112M117 65A13 13 0 1 1 116.9 65M100 88V103M92 95H108'],
+  fresco:['M35 37H163V167H35ZM43 45H155V159M50 147Q84 68 149 116M50 143L90 87 139 142M116 60A15 15 0 1 1 115.9 60','M20 181L76 24M18 181L23 182 80 25 76 24M78 20L83 7Q95 7 85 25Z','M46 152H148M51 154V158M61 154V158M71 154V158'],
+  bookbinder:['M39 39L133 20 166 40V159L72 181 39 160ZM39 39L72 61 166 40M72 61V181','M78 71L155 53M78 80L155 62M78 90L155 72M78 99L155 81M78 156L155 138M78 165L155 147','M42 64L68 80M42 87L68 103M42 110L68 126M42 133L68 149M45 157L69 171'],
+  apothecary:['M30 58H77V73L83 85V163H24V85L30 73ZM32 50H75V58M42 85H64V119H42Z','M112 39H159V60L166 75V162H105V75L112 60ZM114 29H157V39M115 85H156V126H115Z','M32 138H76M113 143H158M131 97V114M122 106H149M41 129H66'],
+  swordsmith:['M102 13L116 35 110 119H92L87 35ZM102 22V119M77 122H126V132H77ZM95 132H108V168H95ZM89 169H114V180H89Z','M96 142H107M96 151H107M96 159H107','M25 101H66V118H58V155H29V118H22ZM25 109H66M145 65L169 37M149 70L175 41M158 55L168 64'],
+  stonemason:['M26 169V91Q26 21 100 21Q174 21 174 91V169H146V94Q146 51 100 51Q54 51 54 94V169ZM26 130H54M146 130H174M26 102H54M146 102H174','M31 67L57 78M51 39L70 60M83 23L88 53M117 23L112 53M149 39L130 60M169 67L143 78','M65 180V119H121V127H73V180ZM71 139H76M71 151H76M71 163H76'],
+  weaver:['M32 24H168V174H32ZM42 34H158V163H42M52 18V180M65 18V180M78 18V180M91 18V180M104 18V180M117 18V180M130 18V180M143 18V180','M43 61H157M43 75H157M43 89H157M43 103H157M43 117H157M43 131H157M43 145H157','M28 191L72 166 170 173 131 194ZM75 175L131 181M80 181L127 187'],
+  astronomer:['M100 23A66 66 0 1 1 99.9 23M100 36A53 53 0 1 0 100.1 36','M34 89H166M100 23V155M53 42L147 136M53 136L147 42M100 155V176M67 183H133M79 176H121','M92 80L135 48 112 99 92 80M92 80L71 125 112 99M100 82V96M93 89H107'],
+  vintner:['M48 40Q100 19 152 40Q178 101 152 160Q100 182 48 160Q22 101 48 40Z','M44 52Q100 72 156 52M37 73Q100 93 163 73M37 127Q100 146 163 127M43 148Q100 169 157 148M68 37Q43 100 68 164M87 32Q74 100 87 170M113 32Q126 100 113 170M132 37Q157 100 132 164','M96 105H110V119H96ZM110 112H127'],
+  printer:['M31 28H169V43H31ZM43 43V166H28V179H172V166H157V43M51 166H149M99 44V94M77 95H123V109H77Z','M62 135H139V145H62ZM69 123H134V135H69M103 62H176M172 52V72M82 111L71 122M118 111L130 122','M84 128H120M76 151H127M76 157H114']
+ };
+ function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+ function plate(id,cls){return '<svg class="'+cls+'" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(plates[id]||plates.cartographer).map(function(p){return '<path d="'+p+'"/>';}).join('')+'</svg>';}
+ function words(c,h,text,x,y,w,size,leading,maxLines,fam){var ts=String(text).split(/\s+/),ls,px=size;ts.forEach(function(t){px=Math.min(px,h.fit(c,t,w,px,fam));});do{c.font=h.font(px,fam);ls=[];var ln='';ts.forEach(function(t){var n=ln?ln+' '+t:t;if(ln&&c.measureText(n).width>w){ls.push(ln);ln=t;}else ln=n;});if(ln)ls.push(ln);if(ls.length<=maxLines||px<=20)break;px-=2;}while(true);ls.forEach(function(l,i){c.fillText(l,x,y+i*px*leading);});return y+(ls.length-1)*px*leading;}
+ window.THEME_EN={colors:{bg:'#eee3cb',fg:'#49372a',accent:'#8b4635',muted:'#73604b'},cardFont:sans,letters:['a','b','c','d'],qNo:function(i){return 'Working note '+String(i+1).padStart(2,'0');},pickDelay:260,loadingMs:1950,
+  decor:'<div class="en-workshop-grid"></div><svg class="en-workshop-sketch" viewBox="0 0 700 900" fill="none" aria-hidden="true"><g stroke="currentColor"><circle cx="350" cy="420" r="280"/><circle cx="350" cy="420" r="205"/><path d="M0 420H700M350 0V900M70 140H630V700H70ZM70 140L630 700M630 140L70 700"/><path d="M20 106H680M20 100V112M680 100V112M666 140V700M660 140H672M660 700H672"/></g></svg>',
+  homeTop:'<div class="en-workshop-drawing">'+plate('cartographer','en-cover-tool')+'<span class="en-handnote">measure twice,<br>wonder often.</span><span class="en-fig">Fig. 01</span></div>',
+  ornament:'<span class="en-pencil-rule" aria-hidden="true"></span>',homeBottom:'<div class="en-folio-foot">An apprenticeship in being yourself.</div>',loader:'<div class="en-press-loader">'+plate('printer','en-cover-tool')+'<span>One impression at a time.</span></div>',
+  gateArt:'<div class="pw-art en-folded-folio" aria-label="Folded workshop papers with a wax seal"><span class="en-folio-label">WORKSHOP<br>PAPERS</span><div class="en-wax"><svg viewBox="0 0 50 50" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="25" cy="25" r="19"/><path d="M25 9L13 39M25 9L37 39M17 29H33M25 7V18"/></svg></div><small>Prepared for its maker</small></div>',
+  onBuild:function(){document.getElementById('chips').textContent='';},
+  heroHTML:function(r,pct,L){return '<div class="r-hero en-craft-folio"><div class="en-folio-head"><span>'+esc(L.resultKicker)+'</span><span>Plate '+esc(r.seal)+'</span></div><div class="en-tool-plate">'+plate(r.id,'en-result-tool')+'<span class="en-handnote">'+esc(r.tool)+'</span></div><h1 class="r-name">'+esc(r.name)+'</h1><div class="r-sub">'+esc(r.sub)+'</div><div class="r-tag">'+esc(r.tag)+'</div><div class="r-quote">'+esc(r.quote)+'</div><div class="r-traits">'+r.traits.map(function(t){return '<span>'+esc(t)+'</span>';}).join('')+'</div><div class="r-pct">'+esc(L.pct)+'<b>'+pct+'%</b></div></div>';},
+  drawCard:function(c,d,h){
+   c.fillStyle='#eee3cb';c.fillRect(0,0,1080,1440);h.noise(c,6500,'rgba(82,55,25,A)',37);c.strokeStyle='rgba(100,75,45,.1)';c.lineWidth=1;for(var x=48;x<1080;x+=40){c.beginPath();c.moveTo(x,0);c.lineTo(x,1440);c.stroke();}for(var y=40;y<1440;y+=40){c.beginPath();c.moveTo(0,y);c.lineTo(1080,y);c.stroke();}
+   c.strokeStyle='#8c7858';c.lineWidth=2;c.strokeRect(48,48,984,1344);c.textAlign='left';c.fillStyle='#49372a';c.font=h.font(26,sans);c.fillText('THE WORKSHOP PAPERS',98,127);c.textAlign='right';c.fillText('PLATE '+d.r.seal,982,127);c.beginPath();c.moveTo(98,164);c.lineTo(982,164);c.stroke();
+   c.save();c.translate(90,280);c.scale(2.1,2.1);c.strokeStyle='#604a34';c.lineWidth=1.3;(plates[d.r.id]||plates.cartographer).forEach(function(p){c.stroke(new Path2D(p));});c.restore();
+   c.textAlign='left';c.fillStyle='#49372a';words(c,h,d.r.name,560,365,410,69,1.12,3,serif);c.fillStyle='#8b4635';words(c,h,d.r.sub,560,622,390,29,1.4,3,serif);
+   c.textAlign='center';c.fillStyle='#73604b';words(c,h,d.r.tool,310,755,430,26,1.25,2,sans);c.strokeStyle='#9c8664';c.beginPath();c.moveTo(98,805);c.lineTo(982,805);c.stroke();
+   c.fillStyle='#49372a';words(c,h,d.r.tag,540,865,810,32,1.35,2,sans);c.fillStyle='#8b4635';words(c,h,'“'+d.r.quote+'”',540,1000,790,43,1.25,3,serif);
+   c.fillStyle='#49372a';words(c,h,d.r.traits.join(' / '),540,1200,800,25,1.3,2,sans);c.font=h.font(25,sans);c.fillText(d.labels.cardFooter,540,1298);c.fillStyle='#73604b';c.font=h.font(20,sans);c.fillText(d.labels.cardDisc,540,1345);
+  }
+ };
+})();
